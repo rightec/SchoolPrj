@@ -1,0 +1,66 @@
+﻿@page "/counter"
+@using Microsoft.AspNetCore.WebUtilities;
+@using Microsoft.Extensions.Primitives;
+@inject NavigationManager navManager
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+<br />
+<p>Query Result: @queryRes</p>
+<br />
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-primary" @onclick="GetFerna">Get Ferna</button>
+
+<MyPersonView Person=@nuovaPersona  />
+
+<MySecondComponent CurrentCounterValue=@valueToPass />
+
+<MyPerson />
+
+
+@*
+    <MySecondComponent CurrentCounterValue=50 />
+    <MySecondComponent CurrentCounterValue="@valueToPass" />
+*@
+
+
+
+@code {
+    private int currentCount = 0;
+    private int valueToPass = 0;
+    private int myConst = 13;
+    private String queryRes = "";
+    private Person nuovaPersona = new Person();
+
+    protected override void OnInitialized()
+    {
+        StringValues initCount;
+        var uri = navManager.ToAbsoluteUri(navManager.Uri);
+        Console.WriteLine("URI" + uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("initialCount", out initCount))
+        {
+            currentCount = Convert.ToInt32(initCount);
+        }
+
+        nuovaPersona.Salutation = "Sen.";
+    }
+
+    private void GetFerna()
+    {
+        var uri = navManager.ToAbsoluteUri(navManager.Uri);
+        StringValues stringReceived;
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("Index", out stringReceived))
+        {
+            Console.WriteLine("query res is:" + stringReceived);
+            queryRes = stringReceived;
+        }
+    }
+
+    private void IncrementCount()
+    {
+        currentCount++;
+        valueToPass = currentCount * 10;
+    }
+}

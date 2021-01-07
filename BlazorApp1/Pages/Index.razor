@@ -1,0 +1,47 @@
+﻿@page "/"
+@inject NavigationManager NavManager
+
+<h1>Hello, world!</h1>
+
+
+<BlazorApp1.Components.MyFirstComponent />
+
+<MyFirstComponent />
+
+<input size=@InputSize />
+
+@*
+    TO COMMENT HTML
+    <input value=@DoubleInputSize() />
+*@
+
+    <input value=@($"Size is {DoubleInputSize()}") />
+
+    <MyHeader Text=@HeaderText Visible=@HeaderVisible />
+
+    <button class="btn btn-primary" @onclick="HomeCalling">
+        Home Calling
+    </button>
+
+
+    @code {
+        int InputSize = 8;
+        bool HeaderVisible = true;
+        string HeaderText = "Value of variable";
+
+        private void HomeCalling(MouseEventArgs e)
+        {
+
+        }
+
+        private int DoubleInputSize()
+        {
+            return InputSize * 2;
+        }
+    }
+
+
+
+    Welcome to your new app.
+
+    <SurveyPrompt Title="How is Blazor working for you?" />

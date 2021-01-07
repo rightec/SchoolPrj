@@ -1,0 +1,11 @@
+﻿@if (Visible)
+{
+    <h1>@Text</h1>
+}
+@code
+{
+    [Parameter] // decoration
+    public bool Visible { get; set; } = true;
+    [Parameter]
+    public string Text { get; set; } = "Prova";
+}

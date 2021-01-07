@@ -1,0 +1,18 @@
+﻿<div class="row">
+    <div class="col-4">To HTML attribute using .ToString()</div>
+    <div class="col-8"><input readonly value=@ClassPerson /></div>
+</div>
+@code
+{
+    Person ClassPerson;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        ClassPerson = new Person
+        {
+            Salutation = "Mr",
+            GivenName = "Peter",
+            FamilyName = "Morris"
+        };
+    }
+}
