@@ -1,13 +1,21 @@
 ﻿@page "/"
 @inject NavigationManager NavManager
-
-<h1>Hello, world!</h1>
+@* Razor mark-up with @ref directive *@
+<h1 @onclick=H1Clicked>Hello, world!</h1>
 
 
 <BlazorApp1.Components.MyFirstComponent />
 
 <MyFirstComponent />
 
+<h2>A generic list of Person</h2>
+<DataList Data=@StudentFromClass>
+    @context.CourseName @context.FamilyName @context.GivenName
+</DataList>
+
+<DataList Data=@PersonFromClass>
+    @context.Salutation @context.FamilyName @context.GivenName
+</DataList>
 <input size=@InputSize />
 
 @*
@@ -15,33 +23,55 @@
     <input value=@DoubleInputSize() />
 *@
 
-    <input value=@($"Size is {DoubleInputSize()}") />
+<input value=@($"Size is {DoubleInputSize()}") />
 
-    <MyHeader Text=@HeaderText Visible=@HeaderVisible />
+<MyHeader Text=@HeaderText Visible=@HeaderVisible />
 
-    <button class="btn btn-primary" @onclick="HomeCalling">
-        Home Calling
-    </button>
+<button class="btn btn-primary" @onclick="HomeCalling">
+    Home Calling
+</button>
 
 
-    @code {
-        int InputSize = 8;
-        bool HeaderVisible = true;
-        string HeaderText = "Value of variable";
+@code {
+    int InputSize = 8;
+    bool HeaderVisible = true;
+    string HeaderText = "Value of variable";
+    private IEnumerable<Students> StudentFromClass;
+    private IEnumerable<Person> PersonFromClass;
 
-        private void HomeCalling(MouseEventArgs e)
-        {
+    private void HomeCalling(MouseEventArgs e)
+    {
 
-        }
-
-        private int DoubleInputSize()
-        {
-            return InputSize * 2;
-        }
     }
+
+    private int DoubleInputSize()
+    {
+        return InputSize * 2;
+    }
+
+    public void H1Clicked(MouseEventArgs args)
+    {
+        System.Diagnostics.Debug.WriteLine("H1 clicked");
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        StudentFromClass = new Students[]
+    {
+      new Students { CourseName = "Beginner", GivenName = "Bob", FamilyName = "Geldof" },
+      new Students { CourseName = "Intermediate", GivenName = "Angela", FamilyName = "Rippon" },
+      new Students { CourseName = "Beginner", GivenName = "Freddie", FamilyName = "Mercury" }
+        };
+        PersonFromClass = new Person[]
+            {
+      new Person { Salutation = "Ciccio", GivenName = "Bob", FamilyName = "Geldof" },
+        };
+    }
+}
 
 
 
     Welcome to your new app.
 
-    <SurveyPrompt Title="How is Blazor working for you?" />
+<SurveyPrompt Title="How is Blazor working for you?" />
